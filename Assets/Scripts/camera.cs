@@ -6,8 +6,8 @@ public class camera : MonoBehaviour {
 
     public float speed = 10.0f;
     public float rotationSpeed = 100.0f;
-    float horizontalSpeed = 2.0f;
-    float verticalSpeed = 2.0f;
+    // float horizontalSpeed = 2.0f;
+    // float verticalSpeed = 2.0f;
 
     // Use this for initialization
     void Start () {
@@ -31,5 +31,14 @@ public class camera : MonoBehaviour {
 
         // Rotate around our y-axis
         transform.Rotate(0, rotation, 0);
+    }
+
+    void OnCollisionEnter(Collision collider)
+    {
+        Debug.Log("Enter");
+    }
+    void OnCollisionExit(Collision collider)
+    {
+        Debug.Log("out");
     }
 }
