@@ -3,3 +3,6 @@ Packages
 Temp
 *.sln
 .vs
+Assembly-CSharp.csproj
+*.csproj
+
