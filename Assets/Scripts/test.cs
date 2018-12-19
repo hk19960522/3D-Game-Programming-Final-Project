@@ -6,7 +6,7 @@ public class test : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        Debug.Log("hey?");
 	}
 	
 	// Update is called once per frame
@@ -14,8 +14,4 @@ public class test : MonoBehaviour {
 		
 	}
 
-    void OnCollisionStay(Collision collider)
-    {
-        Debug.Log("Booma");
-    }    
 }
