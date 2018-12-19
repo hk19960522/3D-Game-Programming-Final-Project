@@ -1,52 +1,73 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class create_trees : MonoBehaviour {
+public class create_level_scene : MonoBehaviour {
 
     public GameObject[] tree = new GameObject[16];
     public GameObject[] flower = new GameObject[6];
     public GameObject[] grass = new GameObject[10];
     public GameObject[] stone = new GameObject[7];
-    public BoxCollider box_collider;
-    public GameObject a_ball_for_marking;
-    GameObject forest, level; // for tag
-    
-    float minPosX = 20, maxPosX = 480, 
-          minPosZ = 20, maxPosZ = 480;
+    public GameObject[] prey = new GameObject[6];
+    GameObject forest, preys;
 
-    int[] scale = new int[] {3, 5, 7, 10, 13};
-    int[] flower_scale = new int[] {30, 50, 70 };
+    float minPosX = 20, maxPosX = 480,
+          minPosZ = 20, maxPosZ = 80;
+
+    int[] scale = new int[] { 3, 5, 7, 10, 13 };
+    int[] flower_scale = new int[] { 30, 50, 70 };
     Vector3 new_pos;
     int random_index, random_scale;
     float random_scale_f;
-    GameObject newObj, newBall;
-    BoxCollider newCollider;
-   
-    // terrain is 500*500 for x and z
+    GameObject newObj;
+    Transform my_prey;
+
     // Use this for initialization
     void Start () {
         Init_tags();
         Create_forest();
-        Create_level_key();
+        Create_prey();
+	}
+
+    void Create_prey()
+    {
+        random_index = Random.Range(0, prey.Length);
+        new_pos = new Vector3(236.7f, 5.0f, 15.08f);
+        if (random_index == 0 || random_index == 3 || random_index == 4 || random_index == 5)
+        {
+            new_pos.y += 2;
+        }
+        else if(random_index == 2)
+        {
+            new_pos.y += 1;
+        }
+        newObj = Instantiate(prey[random_index], new_pos, Quaternion.identity);
+        newObj.transform.localScale = new Vector3(2, 2, 2);
+        newObj.transform.localRotation *= Quaternion.Euler(0, 5, 0);
+        newObj.transform.parent = preys.transform;
+        if(random_index == 1 || random_index == 3 || random_index == 4 || random_index == 5)
+        {
+            // rotate 180 degree
+            newObj.transform.localRotation *= Quaternion.Euler(0, 180, 0);
+        }
+        my_prey = newObj.transform;
+        BoxCollider prey_collider = newObj.AddComponent<BoxCollider>();
+        prey_collider.transform.localScale = new Vector3(3, 3, 3);
     }
 
     void Init_tags()
     {
         forest = GameObject.FindWithTag("Forest");
-        level = GameObject.FindWithTag("Level");
+        preys = GameObject.FindWithTag("Prey");
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 
     void Create_forest()
     {
-        for (int i = 0; i < 1800; i++)
+        for (int i = 0; i < 350; i++)
         {
-            if (i < 500) // trees
+            if (i < 100) // trees
             {
                 random_index = Random.Range(0, tree.Length);
                 random_scale = scale[Random.Range(0, scale.Length)];
@@ -72,7 +93,7 @@ public class create_trees : MonoBehaviour {
             newObj.transform.localScale = new Vector3(random_scale_f, random_scale_f, random_scale_f);
             newObj.transform.parent = forest.transform;
 
-            if (i < 800) // flowers
+            if (i < 130) // flowers
             {
                 random_index = Random.Range(0, flower.Length);
                 int random_scale_index = Random.Range(0, flower_scale.Length);
@@ -83,7 +104,7 @@ public class create_trees : MonoBehaviour {
                 newObj.transform.parent = forest.transform;
             }
 
-            if (i < 1200)
+            if (i < 240)
             {
                 // stone
                 random_index = Random.Range(0, stone.Length);
@@ -95,21 +116,7 @@ public class create_trees : MonoBehaviour {
             }
         }
     }
-        
-    void Create_level_key()
-    {
-        // enter the key then change the scene
-        for (int i = 0; i < 20; i++)
-        {
-            Vector3 new_pos = Get_new_pos();
-            new_pos.y = 10;
-            newCollider = Instantiate(box_collider, new_pos, Quaternion.identity);
-            newCollider.transform.parent = level.transform;
 
-            newBall = Instantiate(a_ball_for_marking, new_pos, Quaternion.identity);
-            newBall.transform.parent = newCollider.transform;
-        }
-    }
 
     Vector3 Get_new_pos()
     {
@@ -120,4 +127,24 @@ public class create_trees : MonoBehaviour {
         }
         return pos;
     }
+
+    // Update is called once per frame
+    void Update () {
+		if (Input.GetMouseButtonDown(0)) // left mouse click
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                Transform objectHit = hit.transform;
+                if(objectHit == my_prey) // if hit the prey
+                {
+                    Debug.Log("to Main");
+                    SceneManager.LoadScene("Main");
+                }
+                
+            }
+        }
+	}
 }

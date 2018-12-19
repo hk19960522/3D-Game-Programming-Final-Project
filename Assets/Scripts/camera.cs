@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class camera : MonoBehaviour {
 
@@ -22,7 +23,7 @@ public class camera : MonoBehaviour {
         float translation = Input.GetAxis("Vertical") * speed;
         float rotation = Input.GetAxis("Horizontal") * rotationSpeed;
 
-        // Make it move 10 meters per second instead of 10 meters per frame...
+        // Make it move "speed" meters per second instead of 10 meters per frame...
         translation *= Time.deltaTime;
         rotation *= Time.deltaTime;
 
@@ -35,10 +36,6 @@ public class camera : MonoBehaviour {
 
     void OnCollisionEnter(Collision collider)
     {
-        Debug.Log("Enter");
-    }
-    void OnCollisionExit(Collision collider)
-    {
-        Debug.Log("out");
+        SceneManager.LoadScene("level");
     }
 }
