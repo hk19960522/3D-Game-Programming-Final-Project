@@ -25,6 +25,7 @@ public class create_level_scene : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        my_camera.player.gameObject.SetActive(false);
         Init_tags();
         Create_forest();
         Create_prey();
@@ -58,7 +59,7 @@ public class create_level_scene : MonoBehaviour {
 
     void Init_tags()
     {
-        forest = GameObject.FindWithTag("Forest");
+        forest = GameObject.FindWithTag("Level_forest");
         preys = GameObject.FindWithTag("Prey");
     }
 
@@ -133,15 +134,17 @@ public class create_level_scene : MonoBehaviour {
 		if (Input.GetMouseButtonDown(0)) // left mouse click
         {
             RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Camera camera2 = GameObject.FindGameObjectWithTag("level_Camera").GetComponent<Camera>() as Camera;
+            Ray ray = camera2.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit))
             {
                 Transform objectHit = hit.transform;
                 if(objectHit == my_prey) // if hit the prey
                 {
-                    Debug.Log("to Main");
-                    SceneManager.LoadScene("Main");
+                    // Debug.Log("to Main");
+                    my_camera.player.gameObject.SetActive(true);
+                    SceneManager.LoadScene("main");
                 }
                 
             }

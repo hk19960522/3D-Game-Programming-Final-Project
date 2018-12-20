@@ -10,7 +10,7 @@ public class create_trees : MonoBehaviour {
     public GameObject[] stone = new GameObject[7];
     public BoxCollider box_collider;
     public GameObject a_ball_for_marking;
-    GameObject forest, level; // for tag
+    GameObject forest, level, terrain, a_light; // for tag
     
     float minPosX = 20, maxPosX = 480, 
           minPosZ = 20, maxPosZ = 480;
@@ -22,24 +22,33 @@ public class create_trees : MonoBehaviour {
     float random_scale_f;
     GameObject newObj, newBall;
     BoxCollider newCollider;
-   
+
     // terrain is 500*500 for x and z
     // Use this for initialization
     void Start () {
+        // Debug.Log("start: " + my_camera.player.transform.position);
         Init_tags();
         Create_forest();
-        Create_level_key();
     }
 
     void Init_tags()
     {
         forest = GameObject.FindWithTag("Forest");
+        terrain = GameObject.FindWithTag("Terrain");
+        DontDestroyOnLoad(terrain);
         level = GameObject.FindWithTag("Level");
+        DontDestroyOnLoad(level);
+        a_light = GameObject.FindWithTag("Area_light");
+        DontDestroyOnLoad(a_light);
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (level.transform.childCount < 20)
+        {
+            Debug.Log(level.transform.childCount);
+            Create_level_key();
+        }
 	}
 
     void Create_forest()
@@ -55,7 +64,6 @@ public class create_trees : MonoBehaviour {
                 newObj.transform.localScale = new Vector3(random_scale, random_scale, random_scale);
                 newObj.transform.parent = forest.transform;
             }
-
 
             // grass
             random_index = Random.Range(0, grass.Length);
@@ -99,12 +107,14 @@ public class create_trees : MonoBehaviour {
     void Create_level_key()
     {
         // enter the key then change the scene
-        for (int i = 0; i < 20; i++)
+        int now_levels = level.transform.childCount;
+        for (int i = now_levels; i < 20; i++)
         {
             Vector3 new_pos = Get_new_pos();
             new_pos.y = 10;
             newCollider = Instantiate(box_collider, new_pos, Quaternion.identity);
             newCollider.transform.parent = level.transform;
+            newCollider.tag = "Level_sub";
 
             newBall = Instantiate(a_ball_for_marking, new_pos, Quaternion.identity);
             newBall.transform.parent = newCollider.transform;

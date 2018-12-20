@@ -7,6 +7,11 @@ TagManager:
   - Forest
   - Level
   - Prey
+  - Terrain
+  - level_Camera
+  - Level_sub
+  - Area_light
+  - Level_forest
   layers:
   - Default
   - TransparentFX
