@@ -15,10 +15,11 @@ public class create_trees : MonoBehaviour {
     float minPosX = 20, maxPosX = 480, 
           minPosZ = 20, maxPosZ = 480;
 
-    int[] scale = new int[] {3, 5, 7, 10, 13};
+    float[] scale = new float[] {3, 5, 7, 10, 13};
     int[] flower_scale = new int[] {30, 50, 70 };
     Vector3 new_pos;
-    int random_index, random_scale;
+    int random_index;
+    float random_scale;
     float random_scale_f;
     GameObject newObj, newBall;
     BoxCollider newCollider;
@@ -49,7 +50,7 @@ public class create_trees : MonoBehaviour {
             if (i < 500) // trees
             {
                 random_index = Random.Range(0, tree.Length);
-                random_scale = scale[Random.Range(0, scale.Length)];
+                random_scale = scale[Random.Range(0, scale.Length)] * 0.5f;
                 new_pos = Get_new_pos();
                 newObj = Instantiate(tree[random_index], new_pos, Quaternion.identity);
                 newObj.transform.localScale = new Vector3(random_scale, random_scale, random_scale);
@@ -118,6 +119,8 @@ public class create_trees : MonoBehaviour {
         { // if in the center range
             pos = new Vector3(Random.Range(minPosX, maxPosX), 0, Random.Range(minPosZ, maxPosZ));
         }
+        pos.x -= 250;
+        pos.z -= 250;
         return pos;
     }
 }
