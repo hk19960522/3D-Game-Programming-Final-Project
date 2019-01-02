@@ -36,6 +36,6 @@ public class camera : MonoBehaviour {
 
     void OnCollisionEnter(Collision collider)
     {
-        SceneManager.LoadScene("level");
+        //SceneManager.LoadScene("level");
     }
 }

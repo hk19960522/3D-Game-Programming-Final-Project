@@ -141,7 +141,7 @@ public class create_level_scene : MonoBehaviour {
                 if(objectHit == my_prey) // if hit the prey
                 {
                     Debug.Log("to Main");
-                    SceneManager.LoadScene("Main");
+                    // SceneManager.LoadScene("Main");
                 }
                 
             }
