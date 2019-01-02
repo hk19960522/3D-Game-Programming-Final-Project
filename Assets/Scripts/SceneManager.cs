@@ -11,6 +11,7 @@ public class SceneManager : MonoBehaviour {
     [SerializeField]
     private GameObject m_PreviewItem;
 
+    [SerializeField]
     private Dictionary<int, GameObject> m_SceneItem = null;
 
     private bool m_IsLoadComplete;
@@ -90,6 +91,7 @@ public class SceneManager : MonoBehaviour {
     {
         if (!IsPositionLegal(x, y, z))
         {
+            Debug.LogError(new Vector3(x, y, z));
             Debug.LogError("Wrong Position");
             return 0;
         }
@@ -125,7 +127,176 @@ public class SceneManager : MonoBehaviour {
 
     public void PutItem()
     {
+        if (m_PreviewItem != null)
+        {
+            // Set game object's component in right value
+            SceneItem componment = m_PreviewItem.GetComponent<SceneItem>();
 
+            // Set game object's layer
+            m_PreviewItem.layer = LayerMask.NameToLayer("SceneItem");
+
+            // Add position into Dictionary
+            int size = componment.GetItemSize();
+            for (int i = 0; i < size; i++)
+            {
+                Vector3 pos;
+                if (componment.GetPosition(i, out pos))
+                {
+                    if (!AddPosition(pos, m_PreviewItem))
+                    {
+                        Debug.LogError("Same position.");
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Wrong index.");
+                }
+            }
+
+            m_PreviewItem = null;
+        }
+    }
+
+    public void PutItemPreview(Vector3 putPoint, Vector3 placePoint, string itemHash, int direction)
+    {
+        int hitPointHash = GetPositionHash(putPoint);
+        int placePointHash = GetPositionHash(placePoint);
+
+        if (m_PreviewItem != null && m_PreviewItem.GetComponent<SceneItem>().GetItemType() == itemHash)
+        {
+            Vector3 prePosition = Vector3.zero;
+            SceneItem sceneItem = m_PreviewItem.GetComponent<SceneItem>();
+            sceneItem.GetPosition(0, out prePosition);
+            if (GetPositionHash(prePosition) == placePointHash)
+            {
+                // Check rotation
+                SceneItem.Direction itemDirection = SceneItem.Direction.FRONT;
+                if (direction == 0)
+                {
+                    // Do nothing
+                    itemDirection = sceneItem.GetDirection();
+                }
+                else if (direction == 1)
+                {
+                    itemDirection = sceneItem.NextDirection(true);
+                }
+                else if (direction == 2)
+                {
+                    itemDirection = sceneItem.NextDirection(false);
+                }
+                else
+                {
+                    Debug.LogError("Wrong Direction.\n");
+                }
+
+                int itemSize = sceneItem.GetItemSize();
+                bool isLegalPlace = true;
+                //Debug.Log(m_PreviewItem.GetComponent<SceneItem>().GetItemSize());
+                for (int i = 0; i < itemSize; i++)
+                {
+                    Vector3 pos = Vector3.zero;
+                    if (sceneItem.GetPosition(i, out pos, itemDirection))
+                    {
+                        //Debug.Log(pos);
+                        if (!IsLegal(GetPositionHash(pos)))
+                        {
+                            isLegalPlace = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (isLegalPlace)
+                {
+                    sceneItem.SetRotate(itemDirection);
+                }
+                else
+                {
+                    Destroy(m_PreviewItem);
+                    m_PreviewItem = null;
+                }
+            }
+            else
+            {
+                int itemSize = sceneItem.GetItemSize();
+                bool isLegalPlace = true;
+                sceneItem.SetPosition(placePoint);
+
+                for (int i = 0; i < itemSize; i++)
+                {
+                    Vector3 pos = Vector3.zero;
+                    if (sceneItem.GetPosition(i, out pos))
+                    {
+                        if (!IsLegal(GetPositionHash(pos)))
+                        {
+                            isLegalPlace = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (isLegalPlace)
+                {
+                    
+                }
+                else
+                {
+                    Destroy(m_PreviewItem);
+                    m_PreviewItem = null;
+                }
+            }
+        }
+        else
+        {
+            if (m_PreviewItem != null)
+            {
+                Destroy(m_PreviewItem);
+                m_PreviewItem = null;
+            }
+            if (IsLegal(placePointHash))
+            {
+                bool isLegalPlace = true;
+                GameObject obj = ResourceManager.Instance.GetItemByHash(itemHash);
+                if (obj == null)
+                {
+                    return;
+                }
+                //Debug.Log(obj.GetComponent<SceneItem>().GetItemSize());
+
+                if (obj == null || obj.GetComponent<SceneItem>() == null)
+                {
+                    Debug.LogError("Wrong item hash.");
+                }
+
+                SceneItem sceneItem = obj.GetComponent<SceneItem>();
+                sceneItem.SetPosition(placePoint);
+
+                int itemSize = sceneItem.GetItemSize();
+                for (int i = 0; i < itemSize; i++)
+                {
+                    Vector3 pos = Vector3.zero;
+                    if (sceneItem.GetPosition(i, out pos))
+                    {
+                        if (!IsLegal(GetPositionHash(pos)))
+                        {
+                            isLegalPlace = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (isLegalPlace)
+                {
+                    m_PreviewItem = obj;
+                    //Debug.Log(sceneItem.GetItemSize() + "    777777777777777");
+                }
+                else
+                {
+                    Destroy(obj);
+                }
+            }
+        }
+        
     }
 
     public void Save()

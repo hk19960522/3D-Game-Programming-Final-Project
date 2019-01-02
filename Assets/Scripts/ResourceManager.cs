@@ -142,7 +142,7 @@ public class ResourceManager : MonoBehaviour {
             if (!m_PrefabPath.ContainsKey(hash))
             {
                 // Object is not exist
-                Debug.LogError("Error.");
+                //Debug.LogError("Error.");
                 return obj;
             } 
         }
@@ -150,11 +150,14 @@ public class ResourceManager : MonoBehaviour {
         // Object Exist
         obj = Instantiate(m_ItemPool[hash]);
         obj.SetActive(true);
+        obj.layer = LayerMask.NameToLayer("PostProcessing");
 
         // Check Component
         if (obj.GetComponent<SceneItem>() != null)
         {
             obj.GetComponent<SceneItem>().Set(m_ItemPool[hash].GetComponent<SceneItem>());
+            //Debug.Log(obj.name);
+            //Debug.Log(obj.GetComponent<SceneItem>().GetItemSize());
         }
 
         return obj;

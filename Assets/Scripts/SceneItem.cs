@@ -21,6 +21,7 @@ public class SceneItem : MonoBehaviour {
 
     // Basic Info
     private Vector3 m_RootPosition;
+    [SerializeField]
     private List<Vector3> m_Offset;
 
     private BreakState m_BreakState;
@@ -32,12 +33,12 @@ public class SceneItem : MonoBehaviour {
 
     public void Start()
     {
-        m_Offset = new List<Vector3>();
-        m_RootPosition = Vector3.zero;
+        ////m_Offset = new List<Vector3>();
+        //m_RootPosition = Vector3.zero;
 
-        m_Offset.Add(Vector3.zero);
-        m_BreakState = BreakState.ALL;
-        m_Direction = Direction.FRONT;
+        ////m_Offset.Add(Vector3.zero);
+        //m_BreakState = BreakState.ALL;
+        //m_Direction = Direction.FRONT;
 
         //Test();
     }
@@ -97,6 +98,10 @@ public class SceneItem : MonoBehaviour {
 
         transform.position = m_RootPosition;
         Rotate(sceneItem.m_Direction);
+
+        //Debug.Log(m_ItemType);
+        //Debug.Log(m_Offset.Count);
+        //Debug.Log(sceneItem.m_Offset.Count);
     }
 
     public int GetItemSize()
@@ -133,6 +138,31 @@ public class SceneItem : MonoBehaviour {
                 rotation = Quaternion.Euler(0, 90, 0);
             }
             else if (m_Direction == Direction.BACK)
+            {
+                rotation = Quaternion.Euler(0, 180, 0);
+            }
+
+            pos = rotation * m_Offset[index] + m_RootPosition;
+            return true;
+        }
+        return false;
+    }
+
+    public bool GetPosition(int index, out Vector3 pos, Direction direction)
+    {
+        pos = Vector3.zero;
+        if (index >= 0 && index < m_Offset.Count)
+        {
+            Quaternion rotation = Quaternion.Euler(0, 0, 0);
+            if (direction == Direction.LEFT)
+            {
+                rotation = Quaternion.Euler(0, -90, 0);
+            }
+            else if (direction == Direction.RIGHT)
+            {
+                rotation = Quaternion.Euler(0, 90, 0);
+            }
+            else if (direction == Direction.BACK)
             {
                 rotation = Quaternion.Euler(0, 180, 0);
             }
@@ -203,5 +233,35 @@ public class SceneItem : MonoBehaviour {
             Rotate(Direction.BACK);
         }
         Rotate(direction);
+    }
+
+    public Direction GetDirection()
+    {
+        return m_Direction;
+    }
+
+    public Direction NextDirection(bool isClockwise)
+    {
+        if (m_Direction == Direction.FRONT)
+        {
+            return isClockwise ? Direction.RIGHT : Direction.LEFT;
+        }
+
+        if (m_Direction == Direction.RIGHT)
+        {
+            return isClockwise ? Direction.BACK : Direction.FRONT;
+        }
+
+        if (m_Direction == Direction.BACK)
+        {
+            return isClockwise ? Direction.LEFT : Direction.RIGHT;
+        }
+
+        return isClockwise ? Direction.FRONT : Direction.BACK;
+    }
+
+    public string GetItemType()
+    {
+        return m_ItemType;
     }
 }
