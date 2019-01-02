@@ -54,13 +54,13 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\ErbGameArt\Dynamic sky shader\Demo scene\SkyboxRotator.cs" />
-     <Compile Include="Assets\Scripts\camera.cs" />
+     <Compile Include="Assets\Scripts\create_level_scene.cs" />
      <Compile Include="Assets\Scripts\create_trees.cs" />
+     <Compile Include="Assets\Scripts\my_camera.cs" />
      <Compile Include="Assets\Scripts\test.cs" />
      <None Include="Assets\CactusPack\Shaders\VertexBlend.shader" />
      <None Include="Assets\ErbGameArt\Dynamic sky shader\Materials\Read me!.txt" />
      <None Include="Assets\CactusPack\Readme.txt" />
-     <None Include="Assets\Stylized Mushroom\Shader\mushroom.shader" />
      <None Include="Assets\CactusPack\Shaders\Basic_Rimlight.shader" />
      <None Include="Assets\BOXOPHOBIC\Skybox Cubemap Extended\Shaders\Skybox Cubemap Extended.shader" />
      <None Include="Assets\ErbGameArt\Dynamic sky shader\Shader\Skybox Pro.shader" />
