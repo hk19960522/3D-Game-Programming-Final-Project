@@ -7,7 +7,7 @@ public class PickItemManager : MonoBehaviour {
 
     private static PickItemManager s_Instance;
 
-    private int m_ItemCapacity = 5;
+    private int m_ItemCapacity = 6;
     [SerializeField]
     private Image[] m_ItemImages;
     [SerializeField]
@@ -61,6 +61,7 @@ public class PickItemManager : MonoBehaviour {
 
                 if (s_Instance == null)
                 {
+                    Debug.Log("HII");
                     GameObject pickItemManager = new GameObject("PickItemManager");
                     s_Instance = pickItemManager.AddComponent<PickItemManager>();
                 }
@@ -72,6 +73,14 @@ public class PickItemManager : MonoBehaviour {
 
     public string GetSelectItemHash()
     {
+        if (m_ItemTags.Length == 0)
+        {
+            m_ItemTags = new string[m_ItemCapacity];
+            for (int i = 0; i < m_ItemCapacity; i++)
+            {
+                m_ItemTags[i] = "NULL";
+            }
+        }
         return m_ItemTags[m_SelectItem];
     }
 
