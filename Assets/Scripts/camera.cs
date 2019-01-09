@@ -10,10 +10,14 @@ public class camera : MonoBehaviour {
     // float horizontalSpeed = 2.0f;
     // float verticalSpeed = 2.0f;
 
+    public static Vector3 player_pos;
+    public static GameObject player;
+
     // Use this for initialization
     void Start () {
-		
-	}
+        player = GameObject.FindWithTag("Player");
+        DontDestroyOnLoad(player);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -28,10 +32,13 @@ public class camera : MonoBehaviour {
         rotation *= Time.deltaTime;
 
         // Move translation along the object's z-axis
-        transform.Translate(0, 0, translation);
+        player.transform.Translate(0, 0, translation);
 
         // Rotate around our y-axis
-        transform.Rotate(0, rotation, 0);
+        player.transform.Rotate(0, rotation, 0);
+
+        player_pos = player.transform.position; // + Camera.main.transform.position;
+        Debug.Log("update: " + player_pos);
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {

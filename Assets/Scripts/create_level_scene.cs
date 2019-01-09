@@ -61,8 +61,7 @@ public class create_level_scene : MonoBehaviour {
         forest = GameObject.FindWithTag("Forest");
         preys = GameObject.FindWithTag("Prey");
     }
-
-
+    
     void Create_forest()
     {
         for (int i = 0; i < 350; i++)
