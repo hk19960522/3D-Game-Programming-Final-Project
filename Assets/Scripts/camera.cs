@@ -33,7 +33,7 @@ public class camera : MonoBehaviour {
         // Rotate around our y-axis
         transform.Rotate(0, rotation, 0);
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("my P");
             for (int i = 0; i < GameObject.Find("PanelWithButtons").transform.childCount; i++)
