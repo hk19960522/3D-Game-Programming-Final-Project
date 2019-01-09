@@ -104,9 +104,10 @@ public class create_trees : MonoBehaviour {
         for (int i = 0; i < 40; i++)
         {
             Vector3 new_pos = Get_new_pos();
-            new_pos.y = 10;
+            new_pos.y = 0;
             newCollider = Instantiate(box_collider, new_pos, Quaternion.identity);
             newCollider.transform.parent = level.transform;
+            newCollider.gameObject.tag = "levels";
 
             newBall = Instantiate(a_ball_for_marking, new_pos, Quaternion.identity);
             newBall.transform.parent = newCollider.transform;

@@ -45,6 +45,10 @@ public class camera : MonoBehaviour {
 
     void OnCollisionEnter(Collision collider)
     {
-        //SceneManager.LoadScene("level");
+        Debug.Log("hit");
+        if (collider.gameObject.CompareTag("levels"))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("level");
+        }
     }
 }
