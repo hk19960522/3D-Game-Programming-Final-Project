@@ -10,13 +10,13 @@ public class create_trees : MonoBehaviour {
     public GameObject[] stone = new GameObject[7];
     public BoxCollider box_collider;
     public GameObject a_ball_for_marking;
-    GameObject forest, level; // for tag
-    
+    GameObject forest, level, terrain, a_light; // for tag
+
     float minPosX = 20, maxPosX = 480, 
           minPosZ = 20, maxPosZ = 480;
 
     float[] scale = new float[] {3, 5, 7, 10, 13};
-    int[] flower_scale = new int[] {30, 50, 70 };
+    float[] flower_scale = new float[] {30, 50, 70 };
     Vector3 new_pos;
     int random_index;
     float random_scale;
@@ -35,19 +35,28 @@ public class create_trees : MonoBehaviour {
     void Init_tags()
     {
         forest = GameObject.FindWithTag("Forest");
+        terrain = GameObject.FindWithTag("Terrain");
+        DontDestroyOnLoad(terrain);
         level = GameObject.FindWithTag("Level");
+        DontDestroyOnLoad(level);
+        a_light = GameObject.FindWithTag("Area_light");
+        DontDestroyOnLoad(a_light);
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        if (level.transform.childCount < 40)
+        {
+            Debug.Log(level.transform.childCount);
+            Create_level_key();
+        }
+    }
 
     void Create_forest()
     {
-        for (int i = 0; i < 1800; i++)
+        for (int i = 0; i < 3600; i++)
         {
-            if (i < 500) // trees
+            if (i < 1500) // trees
             {
                 random_index = Random.Range(0, tree.Length);
                 random_scale = scale[Random.Range(0, scale.Length)] * 0.5f;
@@ -68,27 +77,28 @@ public class create_trees : MonoBehaviour {
             {
                 random_scale_f = Random.Range(0, 0.3f);
             }
+            random_scale_f *= 0.5f;
             new_pos = Get_new_pos();
             newObj = Instantiate(grass[random_index], new_pos, Quaternion.identity);
             newObj.transform.localScale = new Vector3(random_scale_f, random_scale_f, random_scale_f);
             newObj.transform.parent = forest.transform;
 
-            if (i < 800) // flowers
+            if (i < 1600) // flowers
             {
                 random_index = Random.Range(0, flower.Length);
                 int random_scale_index = Random.Range(0, flower_scale.Length);
-                random_scale = flower_scale[random_scale_index];
+                random_scale = flower_scale[random_scale_index] * 0.5f;
                 new_pos = Get_new_pos();
                 newObj = Instantiate(flower[random_index], new_pos, Quaternion.identity);
                 newObj.transform.localScale = new Vector3(random_scale, random_scale, random_scale);
                 newObj.transform.parent = forest.transform;
             }
 
-            if (i < 1200)
+            if (i < 2400)
             {
                 // stone
                 random_index = Random.Range(0, stone.Length);
-                random_scale_f = Random.Range(1f, 2f);
+                random_scale_f = Random.Range(1f, 2f) * 0.5f;
                 new_pos = Get_new_pos();
                 newObj = Instantiate(stone[random_index], new_pos, Quaternion.identity);
                 newObj.transform.localScale = new Vector3(random_scale_f, random_scale_f, random_scale_f);
@@ -100,12 +110,14 @@ public class create_trees : MonoBehaviour {
     void Create_level_key()
     {
         // enter the key then change the scene
-        for (int i = 0; i < 20; i++)
+        int now_levels = level.transform.childCount;
+        for (int i = now_levels; i < 40; i++)
         {
             Vector3 new_pos = Get_new_pos();
-            new_pos.y = 10;
+            new_pos.y = 0;
             newCollider = Instantiate(box_collider, new_pos, Quaternion.identity);
             newCollider.transform.parent = level.transform;
+            newCollider.gameObject.tag = "levels";
 
             newBall = Instantiate(a_ball_for_marking, new_pos, Quaternion.identity);
             newBall.transform.parent = newCollider.transform;

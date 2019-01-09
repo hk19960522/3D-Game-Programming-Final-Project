@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class camera : MonoBehaviour {
@@ -10,10 +11,16 @@ public class camera : MonoBehaviour {
     // float horizontalSpeed = 2.0f;
     // float verticalSpeed = 2.0f;
 
+    public static Vector3 player_pos;
+    public static GameObject player;
+    public Button m_Setting, m_Back, m_Save, m_Home;
+
     // Use this for initialization
     void Start () {
-		
-	}
+        player = GameObject.FindWithTag("Player");
+        DontDestroyOnLoad(player);
+        initialize_UI();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -28,14 +35,64 @@ public class camera : MonoBehaviour {
         rotation *= Time.deltaTime;
 
         // Move translation along the object's z-axis
-        transform.Translate(0, 0, translation);
-
+        player.transform.Translate(0, 0, translation);
         // Rotate around our y-axis
-        transform.Rotate(0, rotation, 0);
+        player.transform.Rotate(0, rotation, 0);
+        player_pos = player.transform.position; // + Camera.main.transform.position;
+
+        // UI
+        // pause panel show
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pause_panel_show_hide(true);
+        }
     }
 
     void OnCollisionEnter(Collision collider)
     {
-        //SceneManager.LoadScene("level");
+        if (collider.gameObject.CompareTag("levels"))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("level");
+        }
+    }
+
+    void initialize_UI()
+    {
+        // setactive false of pause panel
+        pause_panel_show_hide(false);
+
+        // pause panels' buttons pressed
+        m_Setting.onClick.AddListener(click_setting);
+        m_Back.onClick.AddListener(click_back);
+        m_Save.onClick.AddListener(click_save);
+        m_Home.onClick.AddListener(click_home);
+    }
+
+    void click_setting()
+    {
+
+    }
+
+    void click_back()
+    {
+        pause_panel_show_hide(false);
+    }
+
+    void click_save()
+    {
+
+    }
+
+    void click_home()
+    {
+
+    }
+
+    void pause_panel_show_hide(bool show)
+    {
+        for (int i = 0; i < GameObject.Find("Pause_menu").transform.childCount; i++)
+        {
+            GameObject.Find("Pause_menu").transform.GetChild(i).gameObject.SetActive(show);
+        }
     }
 }
