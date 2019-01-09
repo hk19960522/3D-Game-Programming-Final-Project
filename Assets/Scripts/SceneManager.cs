@@ -296,7 +296,6 @@ public class SceneManager : MonoBehaviour {
                 }
             }
         }
-        
     }
 
     public void Save()
