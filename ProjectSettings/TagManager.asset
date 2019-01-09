@@ -10,6 +10,7 @@ TagManager:
   - Area_light
   - Terrain
   - levels
+  - UI
   layers:
   - Default
   - TransparentFX

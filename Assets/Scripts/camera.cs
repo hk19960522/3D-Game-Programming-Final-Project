@@ -17,6 +17,10 @@ public class camera : MonoBehaviour {
     void Start () {
         player = GameObject.FindWithTag("Player");
         DontDestroyOnLoad(player);
+        for (int i = 0; i < GameObject.Find("Canvas").transform.childCount; i++)
+        {
+            GameObject.Find("Canvas").transform.GetChild(i).gameObject.SetActive(false);
+        }
     }
 	
 	// Update is called once per frame
@@ -42,10 +46,9 @@ public class camera : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("my P");
-            for (int i = 0; i < GameObject.Find("PanelWithButtons").transform.childCount; i++)
+            for (int i = 0; i < GameObject.Find("Canvas").transform.childCount; i++)
             {
-                // GameObject.Find("PanelWithButtons").transform.getChild(i).gameObject.SetActive(true);
+                GameObject.Find("Canvas").transform.GetChild(i).gameObject.SetActive(true);
             }
         }
     }
