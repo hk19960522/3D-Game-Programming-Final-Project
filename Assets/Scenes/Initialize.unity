@@ -823,6 +823,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 7
   rotationSpeed: 50
+  m_Setting: {fileID: 878564340}
+  m_Back: {fileID: 546251475}
+  m_Save: {fileID: 824540573}
+  m_Home: {fileID: 1859912247}
 --- !u!54 &708275730
 Rigidbody:
   m_ObjectHideFlags: 0

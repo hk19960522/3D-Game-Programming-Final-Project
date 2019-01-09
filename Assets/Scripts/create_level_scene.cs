@@ -11,6 +11,7 @@ public class create_level_scene : MonoBehaviour {
     public GameObject[] stone = new GameObject[7];
     public GameObject[] prey = new GameObject[6];
     GameObject forest, preys;
+    Camera mLevel_Camera;
 
     float minPosX = 20, maxPosX = 480,
           minPosZ = 20, maxPosZ = 80;
@@ -28,12 +29,15 @@ public class create_level_scene : MonoBehaviour {
         Init_tags();
         Create_forest();
         Create_prey();
-	}
+        mLevel_Camera = GameObject.FindGameObjectWithTag("Level_camera").GetComponent<Camera>() as Camera;
+    }
 
     void Create_prey()
     {
         random_index = Random.Range(0, prey.Length);
         new_pos = new Vector3(236.7f, 5.0f, 15.08f);
+        new_pos.x += 1003;
+        new_pos.z += 1004;
         if (random_index == 0 || random_index == 3 || random_index == 4 || random_index == 5)
         {
             new_pos.y += 2;
@@ -124,6 +128,8 @@ public class create_level_scene : MonoBehaviour {
         { // if in the center range
             pos = new Vector3(Random.Range(minPosX, maxPosX), 0, Random.Range(minPosZ, maxPosZ));
         }
+        pos.x += 1003;
+        pos.z += 1004;
         return pos;
     }
 
@@ -132,7 +138,7 @@ public class create_level_scene : MonoBehaviour {
 		if (Input.GetMouseButtonDown(0)) // left mouse click
         {
             RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = mLevel_Camera.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit))
             {

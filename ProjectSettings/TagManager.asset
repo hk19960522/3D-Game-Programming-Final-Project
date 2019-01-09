@@ -11,6 +11,7 @@ TagManager:
   - Terrain
   - levels
   - UI
+  - Level_camera
   layers:
   - Default
   - TransparentFX
