@@ -54,6 +54,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\ErbGameArt\Dynamic sky shader\Demo scene\SkyboxRotator.cs" />
+     <Compile Include="Assets\Prefab\Animate monsters\Elf\Script\Elf_Manager.cs" />
+     <Compile Include="Assets\Prefab\Animate monsters\Elf\Script\Manager.cs" />
+     <Compile Include="Assets\Prefab\Animate monsters\Mushroom_Monster\Script\MushroomMon_Ani_Test.cs" />
      <Compile Include="Assets\Scripts\Block.cs" />
      <Compile Include="Assets\Scripts\camera.cs" />
      <Compile Include="Assets\Scripts\create_level_scene.cs" />
@@ -66,12 +69,10 @@
      <Compile Include="Assets\Scripts\SceneItem.cs" />
      <Compile Include="Assets\Scripts\SceneManager.cs" />
      <Compile Include="Assets\Scripts\test.cs" />
-     <None Include="Assets\CactusPack\Shaders\VertexBlend.shader" />
      <None Include="Assets\ErbGameArt\Dynamic sky shader\Materials\Read me!.txt" />
-     <None Include="Assets\CactusPack\Readme.txt" />
-     <None Include="Assets\CactusPack\Shaders\Basic_Rimlight.shader" />
      <None Include="Assets\BOXOPHOBIC\Skybox Cubemap Extended\Shaders\Skybox Cubemap Extended.shader" />
      <None Include="Assets\ErbGameArt\Dynamic sky shader\Shader\Skybox Pro.shader" />
+     <None Include="Assets\Prefab\Animate monsters\Mr. Mo Base Character\Readme.txt" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>D:/Program/unity/Test/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
