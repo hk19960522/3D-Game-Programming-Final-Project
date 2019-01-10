@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.IO;
 
@@ -13,11 +14,15 @@ public class ResourceManager : MonoBehaviour {
 
     [SerializeField]
     private BasicItemList m_BasicItemList;
+    [SerializeField]
+    private Sprite m_DefaultSprite;
 
     private Dictionary<string, string> m_PrefabPath;
 
     private GameObject m_ItemPoolRoot;
     private Dictionary<string, GameObject> m_ItemPool = null;
+    private Dictionary<string, Sprite> m_ItemSpritePool = null;
+    private Dictionary<string, string> m_ItemDescriptionPool = null;
 
     private bool m_IsLoadComplete;
 
@@ -25,6 +30,8 @@ public class ResourceManager : MonoBehaviour {
     {
         m_PrefabPath = new Dictionary<string, string>();
         m_ItemPool = new Dictionary<string, GameObject>();
+        m_ItemSpritePool = new Dictionary<string, Sprite>();
+        m_ItemDescriptionPool = new Dictionary<string, string>();
 
         m_ItemPoolRoot = new GameObject("Item Pool Root");
         m_IsLoadComplete = false;
@@ -89,6 +96,16 @@ public class ResourceManager : MonoBehaviour {
                 m_ItemPool.Add(itemInfo.hashTag, obj);
 
                 obj.SetActive(false);
+
+                // Load Sprite
+                Sprite sprite = Resources.Load<Sprite>(itemInfo.imagePath);
+                if (sprite != null)
+                {
+                    m_ItemSpritePool.Add(itemInfo.hashTag, sprite);
+                }
+
+                // Item Description
+                m_ItemDescriptionPool.Add(itemInfo.hashTag, itemInfo.description);
             }
         }
         catch
@@ -133,6 +150,11 @@ public class ResourceManager : MonoBehaviour {
         file.Close();
     }
 
+    public bool CheckItemByHash(string hash)
+    {
+        return m_ItemPool.ContainsKey(hash);
+    }
+
     public GameObject GetItemByHash(string hash)
     {
         GameObject obj = null;
@@ -162,6 +184,25 @@ public class ResourceManager : MonoBehaviour {
 
         return obj;
     }
+
+    public Sprite GetSpriteByHash(string hash)
+    {
+        if (m_ItemSpritePool.ContainsKey(hash))
+        {
+            return m_ItemSpritePool[hash];
+        }
+
+        return m_DefaultSprite;
+    }
+
+    public string GetDescriptionByHash(string hash)
+    {
+        if (m_ItemDescriptionPool.ContainsKey(hash))
+        {
+            return m_ItemDescriptionPool[hash];
+        }
+        return "";
+    }
 }
 
 [Serializable]
@@ -170,6 +211,8 @@ public class SceneItemInfo
     public string hashTag;
     public List<Vector3> offset;
     public string prefabPath;
+    public string imagePath;
+    public string description;
 
     public SceneItemInfo()
     {

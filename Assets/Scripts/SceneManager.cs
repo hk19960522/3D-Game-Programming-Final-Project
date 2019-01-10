@@ -14,6 +14,10 @@ public class SceneManager : MonoBehaviour {
     [SerializeField]
     private Dictionary<int, GameObject> m_SceneItem = null;
 
+    public Inventory m_Inventory;
+    [SerializeField]
+    private Dictionary<string, PlayerInventoryInfo> m_PlayerInventory = null;
+
     private bool m_IsLoadComplete;
 
     public static int MAX_X, MAX_Y, MAX_Z;
@@ -30,6 +34,7 @@ public class SceneManager : MonoBehaviour {
         m_IsLoadComplete = false;
 
         m_SceneItem = new Dictionary<int, GameObject>();
+        m_PlayerInventory = new Dictionary<string, PlayerInventoryInfo>();
 
         //Save();
     }
@@ -335,6 +340,7 @@ public class SceneManager : MonoBehaviour {
             //LoadBlockItem(itemList.blockItems);
 
             LoadSceneItem(itemList.sceneItems);
+            LoadPlayerInventory(itemList.inventoryInfos);
         }
         catch
         {
@@ -379,6 +385,86 @@ public class SceneManager : MonoBehaviour {
             }
         }
     }
+
+    private void LoadPlayerInventory(List<PlayerInventoryInfo> inventoryInfos)
+    {
+        foreach (PlayerInventoryInfo info in inventoryInfos)
+        {
+            m_PlayerInventory.Add(info.hash, info);
+            m_Inventory.SetInventory(info.index, info.hash, info.quantity);
+        }
+    }
+
+    public void PlayerInventoryUpdate()
+    {
+        m_Inventory.ResetInventory();
+        foreach (PlayerInventoryInfo info in m_PlayerInventory.Values)
+        {
+            m_Inventory.SetInventory(info.index, info.hash, info.quantity);
+        }
+    }
+
+    public void PlayerInventoryUpdate(string hash, int delta)
+    {
+        if (m_PlayerInventory.ContainsKey(hash))
+        {
+            m_PlayerInventory[hash].quantity += delta;
+            if (m_PlayerInventory[hash].quantity <= 0)
+            {
+                m_Inventory.RemoveInventory(m_PlayerInventory[hash].index);
+                m_PlayerInventory.Remove(hash);
+            }
+            //else
+            //{
+            //    m_Inventory.SetInventory(
+            //        m_PlayerInventory[hash].index, 
+            //        m_PlayerInventory[hash].hash, 
+            //        m_PlayerInventory[hash].quantity);
+            //}
+        }
+        else
+        {
+            if (delta > 0 && ResourceManager.Instance.CheckItemByHash(hash))
+            {
+                // Add new item
+                bool[] record = new bool[100];
+                foreach(PlayerInventoryInfo info in m_PlayerInventory.Values)
+                {
+                    record[info.index] = true;
+                }
+
+                int fittestIndex = -1;
+                while (record[++fittestIndex]) ;
+
+                PlayerInventoryInfo newInfo = new PlayerInventoryInfo();
+                newInfo.hash = hash;
+                newInfo.index = fittestIndex;
+                newInfo.quantity = delta;
+
+                m_PlayerInventory.Add(hash, newInfo);
+                //m_Inventory.SetInventory(newInfo.index, newInfo.hash, newInfo.quantity);
+            }
+        }
+        PlayerInventoryUpdate();
+    }
+
+    public void PlayerInventorySwapPlace(string hash_1, string hash_2, int index_1, int index_2)
+    {
+        if (m_PlayerInventory.ContainsKey(hash_1) && m_PlayerInventory.ContainsKey(hash_2))
+        {
+            m_PlayerInventory[hash_1].index = index_2;
+            m_PlayerInventory[hash_2].index = index_1;
+        }
+        else if(m_PlayerInventory.ContainsKey(hash_1))
+        {
+            m_PlayerInventory[hash_1].index = index_2;
+        }
+        else if (m_PlayerInventory.ContainsKey(hash_2))
+        {
+            m_PlayerInventory[hash_2].index = index_1;
+        }
+        PlayerInventoryUpdate();
+    }
 }
 
 [Serializable]
@@ -391,12 +477,22 @@ public class SceneItemPlacement
 }
 
 [Serializable]
+public class PlayerInventoryInfo
+{
+    public string hash;
+    public int quantity;
+    public int index;
+}
+
+[Serializable]
 class SceneInfo
 {
     public List<SceneItemPlacement> sceneItems;
+    public List<PlayerInventoryInfo> inventoryInfos;
 
     public SceneInfo()
     {
         sceneItems = new List<SceneItemPlacement>();
+        inventoryInfos = new List<PlayerInventoryInfo>();
     }
 }

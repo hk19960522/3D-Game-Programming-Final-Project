@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class SceneItem : MonoBehaviour {
 
@@ -28,8 +29,7 @@ public class SceneItem : MonoBehaviour {
     private Direction m_Direction;
 
     [SerializeField]
-    private string m_ItemType;
-    
+    private string m_ItemType; 
 
     public void Start()
     {
