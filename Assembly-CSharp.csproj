@@ -73,6 +73,7 @@
      <None Include="Assets\BOXOPHOBIC\Skybox Cubemap Extended\Shaders\Skybox Cubemap Extended.shader" />
      <None Include="Assets\ErbGameArt\Dynamic sky shader\Shader\Skybox Pro.shader" />
      <None Include="Assets\Prefab\Animate monsters\Mr. Mo Base Character\Readme.txt" />
+     <None Include="Assets\Prefab\Weapon\Stone Age Weapons Pack\Readme.txt" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>D:/Program/unity/Test/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
