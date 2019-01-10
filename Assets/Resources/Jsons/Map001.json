@@ -20,5 +20,17 @@
             "direction": 2,
             "breakState": 2
         }
+    ], 
+    "inventoryInfos": [
+        {
+            "hash": "Block001", 
+            "quantity": 2, 
+            "index": 0
+        }, 
+        {
+            "hash": "Block002", 
+            "quantity": 100, 
+            "index": 1
+        }
     ]
 }

@@ -1,0 +1,62 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+public class ItemData : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+{
+    public GameObject m_InventoryManager;
+    private Inventory m_Inventory;
+    private Text m_Text;
+    private Image m_Image;
+
+    public int index { get; set; }
+    public string itemHash { get; set; }
+    public int quantity { get; set; }
+
+	// Use this for initialization
+	void Start () {
+        m_Inventory = m_InventoryManager.GetComponent<Inventory>();
+        itemHash = "NULL";
+        m_Text = GetComponentInChildren<Text>();
+        m_Image = GetComponent<Image>();
+    }
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
+
+    public void SetItemData(string hash, int quan, Sprite sprite)
+    {
+        itemHash = hash;
+        quantity = quan;
+        m_Image.sprite = sprite;
+        m_Text.text = quan.ToString();
+    }
+
+    public void ResetItemData()
+    {
+        itemHash = "NULL";
+        quantity = 0;
+        m_Image.sprite = ResourceManager.Instance.GetSpriteByHash("NULL");
+        m_Text.text = "";
+    }
+
+    public void OnPointerClick(PointerEventData pointerEventData)
+    {
+        m_Inventory.ItemClick(index, itemHash);
+    }
+
+    public void OnPointerEnter(PointerEventData pointerEventData)
+    {
+        m_Inventory.MoveInItem(itemHash);
+    }
+
+    public void OnPointerExit(PointerEventData pointerEventData)
+    {
+        m_Inventory.MoveOutItem();
+    }
+
+}

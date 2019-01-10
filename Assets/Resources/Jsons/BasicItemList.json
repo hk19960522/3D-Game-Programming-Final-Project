@@ -9,7 +9,9 @@
           "z": 0.0
         }
       ],
-      "prefabPath": "Prefabs/BasicItem/SceneItem/Black Block"
+      "prefabPath": "Prefabs/BasicItem/SceneItem/Black Block", 
+      "imagePath": "Textures/Black Block", 
+      "description": "Block Block\nOuO"
     },
     {
       "hashTag": "Block002",
@@ -20,7 +22,9 @@
           "z": 0.0
         }
       ],
-      "prefabPath": "Prefabs/BasicItem/SceneItem/Red Block"
+      "prefabPath": "Prefabs/BasicItem/SceneItem/Red Block", 
+      "imagePath": "Textures/Red Block", 
+      "description": "Red Block\nOuO"
     },
     {
       "hashTag": "Block003",
@@ -31,7 +35,9 @@
           "z": 0.0
         }
       ],
-      "prefabPath": "Prefabs/BasicItem/SceneItem/White Block"
+      "prefabPath": "Prefabs/BasicItem/SceneItem/White Block", 
+      "imagePath": "test", 
+      "description": "...."
     },
     {
       "hashTag": "Block004",
@@ -42,7 +48,9 @@
           "z": 0.0
         }
       ],
-      "prefabPath": "Prefabs/BasicItem/SceneItem/Brown Block 001"
+      "prefabPath": "Prefabs/BasicItem/SceneItem/Brown Block 001", 
+      "imagePath": "test", 
+      "description": "...."
     },
     {
       "hashTag": "Stair001",
@@ -53,7 +61,9 @@
           "z": 0.0
         }
       ],
-      "prefabPath": "Prefabs/BasicItem/SceneItem/Stair 001"
+      "prefabPath": "Prefabs/BasicItem/SceneItem/Stair 001", 
+      "imagePath": "test", 
+      "description": "...."
     },
     {
       "hashTag": "Bed001",
@@ -69,7 +79,9 @@
           "z": 0.0
         }
       ],
-      "prefabPath": "Prefabs/BasicItem/SceneItem/Bed001"
+      "prefabPath": "Prefabs/BasicItem/SceneItem/Bed001", 
+      "imagePath": "Textures/Bed001", 
+      "description": "...."
     },
     {
       "hashTag": "Ground001",
@@ -13080,7 +13092,9 @@
           "z": 25.0
         }
       ],
-      "prefabPath": "Prefabs/BasicItem/SceneItem/Ground001"
+      "prefabPath": "Prefabs/BasicItem/SceneItem/Ground001", 
+      "imagePath": "test", 
+      "description": "...."
     }
   ]
 }
