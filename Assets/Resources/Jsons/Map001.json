@@ -32,5 +32,45 @@
             "quantity": 100, 
             "index": 1
         }
+    ],
+    "craftRules": [
+        {
+            "rawItems": [
+                {
+                    "hash": "Block001", 
+                    "quantity": 1
+                }, 
+                {
+                    "hash": "Block002", 
+                    "quantity": 1
+                }
+            ], 
+            "resultItems": [
+                {
+                    "hash": "Bed001", 
+                    "quantity": 1
+                }
+            ], 
+            "imagePath": "Textures/Black Block"
+        }, 
+        {
+            "rawItems": [
+                {
+                    "hash": "Block001", 
+                    "quantity": 1
+                }, 
+                {
+                    "hash": "Block002", 
+                    "quantity": 1
+                }
+            ], 
+            "resultItems": [
+                {
+                    "hash": "Bed001", 
+                    "quantity": 1
+                }
+            ], 
+            "imagePath": "Textures/Black Block"
+        }
     ]
 }

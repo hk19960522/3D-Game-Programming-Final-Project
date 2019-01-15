@@ -16,6 +16,7 @@ public class ResourceManager : MonoBehaviour {
     private BasicItemList m_BasicItemList;
     [SerializeField]
     private Sprite m_DefaultSprite;
+    public Sprite m_UISprite;
 
     private Dictionary<string, string> m_PrefabPath;
 
@@ -187,6 +188,10 @@ public class ResourceManager : MonoBehaviour {
 
     public Sprite GetSpriteByHash(string hash)
     {
+        if (hash == "UIMask")
+        {
+            return m_UISprite;
+        }
         if (m_ItemSpritePool.ContainsKey(hash))
         {
             return m_ItemSpritePool[hash];

@@ -8,6 +8,16 @@ public class SceneManager : MonoBehaviour {
 
     private static SceneManager s_Instance;
 
+    public enum GameMode
+    {
+        PLAY_MODE, 
+        BUILD_MODE, 
+        INVENTORY_MODE, 
+        PAUSE_MODE
+    };
+
+    public GameMode gameMode { get; set; }
+
     [SerializeField]
     private GameObject m_PreviewItem;
 
@@ -27,6 +37,7 @@ public class SceneManager : MonoBehaviour {
 
     private void Start()
     {
+        gameMode = GameMode.BUILD_MODE;
         MAX_X = MAX_Y = MAX_Z = 25;
         MIN_X = MIN_Y = MIN_Z = -25;
         HASH_UNIT = 1000;
@@ -158,6 +169,8 @@ public class SceneManager : MonoBehaviour {
                 }
             }
 
+            PlayerInventoryUpdate(
+                m_PreviewItem.GetComponent<SceneItem>().GetItemType(), -1);
             m_PreviewItem = null;
         }
     }
@@ -341,6 +354,7 @@ public class SceneManager : MonoBehaviour {
 
             LoadSceneItem(itemList.sceneItems);
             LoadPlayerInventory(itemList.inventoryInfos);
+            LoadCraftRule(itemList.craftRules);
         }
         catch
         {
@@ -393,6 +407,16 @@ public class SceneManager : MonoBehaviour {
             m_PlayerInventory.Add(info.hash, info);
             m_Inventory.SetInventory(info.index, info.hash, info.quantity);
         }
+    }
+
+    private void LoadCraftRule(List<CraftRuleInfo> craftRules)
+    {
+        foreach(CraftRuleInfo rule in craftRules)
+        {
+            Debug.Log(rule.rawItems[0].hash);
+            Debug.Log(rule.resultItems[0].hash);
+        }
+        CraftManager.Instance.BuildCraftRules(craftRules);
     }
 
     public void PlayerInventoryUpdate()
@@ -465,6 +489,16 @@ public class SceneManager : MonoBehaviour {
         }
         PlayerInventoryUpdate();
     }
+
+    public int GetItemQuantity(string hash)
+    {
+        int quan = 0;
+        if (m_PlayerInventory.ContainsKey(hash))
+        {
+            quan = m_PlayerInventory[hash].quantity;
+        }
+        return quan;
+    }
 }
 
 [Serializable]
@@ -485,14 +519,37 @@ public class PlayerInventoryInfo
 }
 
 [Serializable]
+public class CraftItem
+{
+    public string hash;
+    public int quantity;
+}
+
+[Serializable]
+public class CraftRuleInfo
+{
+    public List<CraftItem> rawItems;
+    public List<CraftItem> resultItems;
+    public string imagePath;
+
+    public CraftRuleInfo()
+    {
+        rawItems = new List<CraftItem>();
+        resultItems = new List<CraftItem>();
+    }
+}
+
+[Serializable]
 class SceneInfo
 {
     public List<SceneItemPlacement> sceneItems;
     public List<PlayerInventoryInfo> inventoryInfos;
+    public List<CraftRuleInfo> craftRules;
 
     public SceneInfo()
     {
         sceneItems = new List<SceneItemPlacement>();
         inventoryInfos = new List<PlayerInventoryInfo>();
+        craftRules = new List<CraftRuleInfo>();
     }
 }
