@@ -842,7 +842,6 @@ Transform:
   m_Children:
   - {fileID: 534669905}
   - {fileID: 1580638918}
-  - {fileID: 1045605151}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1929,6 +1928,7 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1043353144}
   m_CullTransparentMesh: 0
+<<<<<<< HEAD
 --- !u!1 &1045605150
 GameObject:
   m_ObjectHideFlags: 0
@@ -1962,6 +1962,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1097357311788760, guid: 4aedc09b6a9a26244a19f37d181a8b55,
     type: 2}
   m_PrefabInternal: {fileID: 776815459}
+=======
+>>>>>>> parent of 40c4b52... weapon animation
 --- !u!1 &1060707863
 GameObject:
   m_ObjectHideFlags: 0
@@ -2100,6 +2102,7 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1096107672}
   m_CullTransparentMesh: 0
+<<<<<<< HEAD
 --- !u!1 &1169886540
 GameObject:
   m_ObjectHideFlags: 0
@@ -2143,6 +2146,9 @@ Transform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1333912208 stripped
+=======
+--- !u!1 &1355976422
+>>>>>>> parent of 40c4b52... weapon animation
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1839134405687456, guid: 4aedc09b6a9a26244a19f37d181a8b55,
     type: 2}
@@ -2420,6 +2426,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+<<<<<<< HEAD
 --- !u!1 &1599233472 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1936797839889716, guid: 4aedc09b6a9a26244a19f37d181a8b55,
@@ -2496,6 +2503,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+=======
+>>>>>>> parent of 40c4b52... weapon animation
 --- !u!1 &1719214499
 GameObject:
   m_ObjectHideFlags: 0
@@ -2939,6 +2948,7 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1859912245}
   m_CullTransparentMesh: 0
+<<<<<<< HEAD
 --- !u!1001 &1964163368
 Prefab:
   m_ObjectHideFlags: 0
@@ -3012,3 +3022,5 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 432822, guid: 7ac878e24d375344fb3a31bf0b650d58,
     type: 2}
   m_PrefabInternal: {fileID: 1964163368}
+=======
+>>>>>>> parent of 40c4b52... weapon animation
