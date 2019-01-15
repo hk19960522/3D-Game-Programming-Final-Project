@@ -83,6 +83,14 @@ public class Inventory : MonoBehaviour {
         {
             SceneManager.Instance.PlayerInventoryUpdate("Bed001", 30);
         }
+
+        // Test
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            GameObject obj = ResourceManager.Instance.GetItemByHash("Block001");
+            obj.AddComponent<DropItem>();
+            obj.GetComponent<DropItem>().SetItem("Block001");
+        }
 	}
 
     public void ShowInventoryPanel()

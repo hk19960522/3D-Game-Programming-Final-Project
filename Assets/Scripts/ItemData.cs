@@ -33,6 +33,8 @@ public class ItemData : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     {
         itemHash = hash;
         quantity = quan;
+        if (m_Image == null) m_Image = GetComponent<Image>();
+        if (m_Text == null) m_Text = GetComponent<Text>();
         m_Image.sprite = sprite;
         m_Text.text = quan.ToString();
     }

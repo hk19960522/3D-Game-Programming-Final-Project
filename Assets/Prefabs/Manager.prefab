@@ -21,7 +21,8 @@ GameObject:
   - component: {fileID: 4042770826020682}
   - component: {fileID: 114603616160156432}
   - component: {fileID: 114764644985910212}
-  - component: {fileID: 114386832810407430}
+  - component: {fileID: 114546627529003044}
+  - component: {fileID: 114404869020072418}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -42,7 +43,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114386832810407430
+--- !u!114 &114404869020072418
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -50,22 +51,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 1688785363643072}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f765c9c743fe5d46b037d8ecad65f76, type: 3}
+  m_Script: {fileID: 11500000, guid: be87dc23d4354b54abd9f6c53f7cbb18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ItemImages:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  m_ItemTags:
-  - Bed001
-  - Block002
-  - Block001
-  - NULL
-  - NULL
-  m_SelectItemImage: {fileID: 0}
+  m_Inventory: {fileID: 0}
+  m_SlotHolder: {fileID: 0}
+  m_CraftHolder: {fileID: 0}
+  m_SelectionHolder: {fileID: 0}
+  m_MaxSlot: 50
+  m_SelectSlot: 5
+  m_WeaponSlot: 5
+  m_ItemDescription: {fileID: 0}
+  m_PopingUI: {fileID: 0}
+--- !u!114 &114546627529003044
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1688785363643072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b71b854bcacbf94195716a95d31a5f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CraftRoot: {fileID: 0}
+  m_CraftRuleObject: {fileID: 0}
 --- !u!114 &114603616160156432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -80,6 +90,8 @@ MonoBehaviour:
   item: {fileID: 0}
   m_BasicItemList:
     sceneItemInfos: []
+  m_DefaultSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_UISprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!114 &114764644985910212
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -92,3 +104,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PreviewItem: {fileID: 0}
+  m_Inventory: {fileID: 114404869020072418}

@@ -339,6 +339,7 @@
 >>>>>>> parent of 40c4b52... weapon animation
     <Compile Include="Assets\Scripts\create_level_scene.cs" />
     <Compile Include="Assets\Scripts\create_trees.cs" />
+    <Compile Include="Assets\Scripts\DropItem.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\ItemData.cs" />
 <<<<<<< HEAD

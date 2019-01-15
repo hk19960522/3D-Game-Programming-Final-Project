@@ -53,7 +53,7 @@ public class CraftRule : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
         bool state = true;
         foreach (CraftItem item in m_RawItem)
         {
-            Debug.Log(item.hash + " " + SceneManager.Instance.GetItemQuantity(item.hash));
+            //Debug.Log(item.hash + " " + SceneManager.Instance.GetItemQuantity(item.hash));
             if (SceneManager.Instance.GetItemQuantity(item.hash) < item.quantity) 
             {
                 state = false;
