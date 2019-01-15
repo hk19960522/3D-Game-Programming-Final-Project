@@ -9,7 +9,11 @@ public class Inventory : MonoBehaviour {
     private bool m_InventoryEnable;
 
     public GameObject m_SlotHolder;
-    public int m_MaxSlot;
+    public GameObject m_CraftHolder;
+    public GameObject m_SelectionHolder;
+    public int m_MaxSlot = 50;
+    public int m_SelectSlot = 5;
+    public int m_WeaponSlot = 5;
     private GameObject[] m_Slots;
 
 
@@ -21,6 +25,8 @@ public class Inventory : MonoBehaviour {
     private bool m_SwapState;
     private int m_ClickItemIndex;
 
+    private SceneManager.GameMode preMode;
+
 	// Use this for initialization
 	void Start () {
         m_InventoryEnable = false;
@@ -28,14 +34,21 @@ public class Inventory : MonoBehaviour {
         m_PopingUIEnable = false;
         m_SwapState = false;
 
-        m_Slots = new GameObject[m_MaxSlot];
+        m_Slots = new GameObject[m_MaxSlot + m_SelectSlot];
         for (int i = 0; i < m_MaxSlot; i++)
         {
             m_Slots[i] = m_SlotHolder.transform.GetChild(i).gameObject;
             m_Slots[i].GetComponent<ItemData>().index = i;
         }
+        for (int i = 0; i < m_SelectSlot; i++)
+        {
+            m_Slots[i + m_MaxSlot] = 
+                m_SelectionHolder.transform.GetChild(i).gameObject;
+            m_Slots[i + m_MaxSlot].GetComponent<ItemData>().index = i + m_MaxSlot;
+        }
 
-        m_Inventory.SetActive(false);
+        ShowInventoryPanel();
+        ShowInventory(false);
         m_ItemDescription.SetActive(false);
 	}
 	
@@ -44,8 +57,19 @@ public class Inventory : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.I))
         {
             m_InventoryEnable = !m_InventoryEnable;
-            m_Inventory.SetActive(m_InventoryEnable);
+            ShowInventory(m_InventoryEnable);
             SceneManager.Instance.PlayerInventoryUpdate();
+            
+            if (m_InventoryEnable)
+            {
+                preMode = SceneManager.Instance.gameMode;
+                SceneManager.Instance.gameMode = 
+                    SceneManager.GameMode.INVENTORY_MODE;
+            }
+            else
+            {
+                SceneManager.Instance.gameMode = preMode;
+            }
         }
 
         if (m_DescriptionEnable && !m_PopingUIEnable)
@@ -61,26 +85,67 @@ public class Inventory : MonoBehaviour {
         }
 	}
 
+    public void ShowInventoryPanel()
+    {
+        m_Inventory.GetComponent<ScrollRect>().content = 
+            m_SlotHolder.GetComponent<RectTransform>();
+        ShowInventory(m_SlotHolder, true);
+        ShowInventory(m_CraftHolder, false);
+    }
+
+    public void ShowCraftPanel()
+    {
+        CraftManager.Instance.UpdateCraftRules();
+        m_Inventory.GetComponent<ScrollRect>().content =
+            m_CraftHolder.GetComponent<RectTransform>();
+        ShowInventory(m_SlotHolder, false);
+        ShowInventory(m_CraftHolder, true);
+    }
+
+    public void ShowInventory(bool state)
+    {
+        m_Inventory.GetComponent<CanvasGroup>().alpha = (state ? 1 : 0);
+        m_Inventory.GetComponent<CanvasGroup>().blocksRaycasts = state;
+    }
+
+    public void ShowInventory(GameObject obj, bool state)
+    {
+        obj.GetComponent<CanvasGroup>().alpha = (state ? 1 : 0);
+        obj.GetComponent<CanvasGroup>().blocksRaycasts = state;
+    }
+
     public void SetInventory(int index, string hash, int quantity)
     {
-        if (index >= 0 && index < m_MaxSlot)
+        if (index >= 0 && index < m_MaxSlot + m_SelectSlot)
         {
             m_Slots[index].GetComponent<ItemData>().
                 SetItemData(hash, quantity, ResourceManager.Instance.GetSpriteByHash(hash));
+
+            if (index >= m_MaxSlot)
+            {
+                PickItemManager.Instance.
+                    UpdateSelectSlot(index - m_MaxSlot, hash, quantity);
+            }
         }
     }
 
     public void RemoveInventory(int index)
     {
-        if (index >= 0 && index < m_MaxSlot)
+        if (index >= 0 && index < m_MaxSlot + m_SelectSlot)
         {
             m_Slots[index].GetComponent<ItemData>().ResetItemData();
+            //Debug.Log(index);
+            if (index >= m_MaxSlot && index < m_MaxSlot + m_SelectSlot)
+            {
+                //Debug.Log("0");
+                PickItemManager.Instance.RemoveSelectSlot(index - m_MaxSlot);
+            }
         }
     }
 
     public void ResetInventory()
     {
-        for (int i = 0; i < m_MaxSlot; i++)
+        for (int i = 0; i < m_MaxSlot + m_SelectSlot; i++)
         {
             m_Slots[i].GetComponent<ItemData>().ResetItemData();
         }
@@ -88,7 +153,8 @@ public class Inventory : MonoBehaviour {
 
     public void ItemClick(int index, string hash)
     {
-        if ((hash == "NULL" && !m_SwapState) || index < 0 || index >= m_MaxSlot)
+        if ((hash == "NULL" && !m_SwapState) || 
+            index < 0 || index >= m_MaxSlot + m_SelectSlot)
         {
             if (m_PopingUI.activeInHierarchy)
             {
@@ -140,6 +206,7 @@ public class Inventory : MonoBehaviour {
 
     public void PanelClick()
     {
+        Debug.Log("HI");
         if (m_PopingUI.activeInHierarchy)
         {
             m_PopingUIEnable = !m_PopingUIEnable;
