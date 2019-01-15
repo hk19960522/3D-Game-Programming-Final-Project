@@ -16,6 +16,11 @@ public class camera : MonoBehaviour {
     public Button m_Setting, m_Back, m_Save, m_Home;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    protected Animator animator;
+    GameObject my_weapon;
+>>>>>>> parent of d1a4833... switch scene system
 =======
     protected Animator animator;
     GameObject my_weapon;

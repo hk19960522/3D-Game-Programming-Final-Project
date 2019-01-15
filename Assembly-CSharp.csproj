@@ -76,6 +76,7 @@
      <Compile Include="Assets\Scripts\Inventory.cs" />
      <Compile Include="Assets\Scripts\ItemData.cs" />
 <<<<<<< HEAD
+<<<<<<< HEAD
      <Compile Include="Assets\Scripts\Manager\CraftManager.cs" />
      <Compile Include="Assets\Scripts\Manager\CraftRule.cs" />
      <Compile Include="Assets\Scripts\Manager\PickItemManager.cs" />
@@ -85,6 +86,8 @@
      <Compile Include="Assets\Scripts\create_level_scene.cs" />
      <Compile Include="Assets\Scripts\create_trees.cs" />
 >>>>>>> parent of 40c4b52... weapon animation
+=======
+>>>>>>> parent of d1a4833... switch scene system
 =======
 >>>>>>> parent of d1a4833... switch scene system
      <Compile Include="Assets\Scripts\MeshCombineWizard.cs" />
