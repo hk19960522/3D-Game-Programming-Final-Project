@@ -9,3 +9,6 @@ Assembly-CSharp.csproj
 *.csproj
 *.cache
 Assembly-CSharp.csproj
+*.csproj
+*.csproj
+*.cache
