@@ -15,6 +15,11 @@ public class camera : MonoBehaviour {
     public static GameObject player;
     public Button m_Setting, m_Back, m_Save, m_Home;
 
+<<<<<<< HEAD
+=======
+    protected Animator animator;
+    GameObject my_weapon;
+>>>>>>> parent of d1a4833... switch scene system
     // Use this for initialization
     void Start () {
         player = GameObject.FindWithTag("Player");
@@ -46,6 +51,42 @@ public class camera : MonoBehaviour {
         {
             pause_panel_show_hide(true);
         }
+<<<<<<< HEAD
+=======
+
+        if (if_player_in_forest())
+        {
+
+            my_weapon.SetActive(true);
+
+            // animation for weapon            
+            if (animator)
+            {
+                AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+                if (Input.GetMouseButtonDown(0)) // left
+                {
+                    Debug.Log("left");
+                    animator.SetTrigger("left");
+                }
+
+                if (Input.GetMouseButtonDown(1)) // right
+                {
+                    Debug.Log("right");
+                    animator.SetTrigger("right");                 
+                }
+
+            }
+            
+        }
+        else
+        {
+            for (int i = 0; i < GameObject.Find("Weapon").transform.childCount; i++)
+            {
+                GameObject.Find("Weapon").transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+>>>>>>> parent of d1a4833... switch scene system
     }
 
     void OnCollisionEnter(Collision collider)
