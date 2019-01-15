@@ -6,3 +6,4 @@ Temp
 Assembly-CSharp.csproj
 *.csproj
 
+obj/Debug/Assembly-CSharp.csproj.CoreCompileInputs.cache
