@@ -5,16 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Initialize.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/level.unity
     guid: 6ac7ad5aa8ba9b443a79bad50f66ee84
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/main.unity
     guid: cb15a972a259c3c449411202ba509915
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Chien-Yao Test Scene.unity
     guid: 4e1dbd67fb923f345a80eda6e313a9a9
   m_configObjects: {}
