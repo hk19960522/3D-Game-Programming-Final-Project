@@ -15,23 +15,27 @@ public class PlayerBuildScene : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        Vector3 hitPoint, newPoint;
-        if (Input.GetKeyDown(KeyCode.Q)) m_RotateType = 2;
-        if (Input.GetKeyDown(KeyCode.E)) m_RotateType = 1;
+        if (SceneManager.Instance.gameMode == SceneManager.GameMode.BUILD_MODE)
+        {
+            Vector3 hitPoint, newPoint;
+            if (Input.GetKeyDown(KeyCode.Q)) m_RotateType = 2;
+            if (Input.GetKeyDown(KeyCode.E)) m_RotateType = 1;
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            SceneManager.Instance.PutItem();
+            if (Input.GetMouseButtonDown(0))
+            {
+                SceneManager.Instance.PutItem();
+            }
+            if (RayCast(out hitPoint, out newPoint))
+            {
+                SceneManager.Instance.PutItemPreview(
+                    new Vector3(Mathf.Round(hitPoint.x), Mathf.Round(hitPoint.y), Mathf.Round(hitPoint.z)),
+                    new Vector3(Mathf.Round(newPoint.x), Mathf.Round(newPoint.y), Mathf.Round(newPoint.z)),
+                    PickItemManager.Instance.GetSelectItemHash(), m_RotateType);
+
+                m_RotateType = 0;
+            }
         }
-        if (RayCast(out hitPoint, out newPoint))
-        {
-            SceneManager.Instance.PutItemPreview(
-                new Vector3(Mathf.Round(hitPoint.x), Mathf.Round(hitPoint.y), Mathf.Round(hitPoint.z)),
-                new Vector3(Mathf.Round(newPoint.x), Mathf.Round(newPoint.y), Mathf.Round(newPoint.z)),
-                PickItemManager.Instance.GetSelectItemHash(), m_RotateType);
-            
-            m_RotateType = 0;
-        }
+        
 	}
 
     private bool RayCast(out Vector3 hitPoint, out Vector3 newPoint)
