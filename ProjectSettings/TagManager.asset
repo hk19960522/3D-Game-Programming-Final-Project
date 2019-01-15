@@ -12,6 +12,7 @@ TagManager:
   - levels
   - UI
   - Level_camera
+  - Level_player
   layers:
   - Default
   - TransparentFX

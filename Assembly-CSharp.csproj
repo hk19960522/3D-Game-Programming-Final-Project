@@ -64,6 +64,7 @@
      <Compile Include="Assets\Scripts\create_trees.cs" />
      <Compile Include="Assets\Scripts\Inventory.cs" />
      <Compile Include="Assets\Scripts\ItemData.cs" />
+     <Compile Include="Assets\Scripts\level_camera.cs" />
      <Compile Include="Assets\Scripts\MeshCombineWizard.cs" />
      <Compile Include="Assets\Scripts\PickItemManager.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerBuildScene.cs" />

@@ -13,8 +13,8 @@ public class create_level_scene : MonoBehaviour {
     GameObject forest, preys;
     Camera mLevel_Camera;
 
-    float minPosX = 20, maxPosX = 480,
-          minPosZ = 20, maxPosZ = 80;
+    float minPosX = 1050, maxPosX = 1350,
+          minPosZ = 1050, maxPosZ = 1350;
 
     float[] scale = new float[] { 3, 5, 7, 10, 13 };
     float[] flower_scale = new float[] { 30, 50, 70 };
@@ -131,8 +131,7 @@ public class create_level_scene : MonoBehaviour {
             }
         }
     }
-
-
+    
     Vector3 Get_new_pos()
     {
         Vector3 pos = new Vector3(Random.Range(minPosX, maxPosX), 0, Random.Range(minPosZ, maxPosZ));
@@ -140,8 +139,6 @@ public class create_level_scene : MonoBehaviour {
         { // if in the center range
             pos = new Vector3(Random.Range(minPosX, maxPosX), 0, Random.Range(minPosZ, maxPosZ));
         }
-        pos.x += 1003;
-        pos.z += 1004;
         return pos;
     }
 
