@@ -1861,7 +1861,7 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1713877591}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: efc625696d437c14c9cfca1687163e50, type: 2}
   m_CullingMode: 0
@@ -1880,7 +1880,7 @@ CharacterController:
   m_GameObject: {fileID: 1713877591}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Height: 0.14296953
   m_Radius: 0.618064

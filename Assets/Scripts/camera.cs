@@ -7,19 +7,16 @@ using UnityEngine.SceneManagement;
 public class camera : MonoBehaviour {
 
     public float speed = 10.0f;
-    public float rotationSpeed = 2.0f;
-    private float rotation_v = 0.0f;
-    private float rotation_h = 0.0f;
-
-    float min_x = -250, max_x = 250,
-        min_z = -250, max_z = 250;
+    public float rotationSpeed = 100.0f;
+    // float horizontalSpeed = 2.0f;
+    // float verticalSpeed = 2.0f;
 
     public static Vector3 player_pos;
     public static GameObject player;
     public Button m_Setting, m_Back, m_Save, m_Home;
 
-    private Animator animator;
-    private GameObject my_weapon;
+    protected Animator animator;
+    GameObject my_weapon;
     // Use this for initialization
     void Start () {
         player = GameObject.FindWithTag("Player");
@@ -31,32 +28,21 @@ public class camera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        float translation_WS = Input.GetAxis("Vertical") * speed,
-            transition_AD = Input.GetAxis("Horizontal") * speed;
+        // Get the horizontal and vertical axis.
+        // By default they are mapped to the arrow keys.
+        // The value is in the range -1 to 1
+        float translation = Input.GetAxis("Vertical") * speed;
+        float rotation = Input.GetAxis("Horizontal") * rotationSpeed;
 
-        rotation_h += Input.GetAxis("Mouse X") * rotationSpeed;
-        rotation_v += Input.GetAxis("Mouse Y") * rotationSpeed;
+        // Make it move "speed" meters per second instead of 10 meters per frame...
+        translation *= Time.deltaTime;
+        rotation *= Time.deltaTime;
 
-        translation_WS *= Time.deltaTime;
-        transition_AD *= Time.deltaTime;
-        // rotation_h *= Time.deltaTime;
-        // rotation_v *= Time.deltaTime;
-
-        player.transform.Translate(transition_AD, 0, translation_WS);
-        Vector3 p_newPos = player.transform.position;
-        if (!(min_x <= p_newPos.x && p_newPos.x <= max_x && min_z <= p_newPos.z && p_newPos.z <= max_z))
-        {
-            player.transform.Translate(-transition_AD, 0, -translation_WS);
-        }
-        // keep y 
-        Vector3 pos = player.transform.position;
-        pos.y = 10.0f;
-        player.transform.position = pos;
-
-        // Rotate 
-        if (rotation_v > 90) rotation_v = 90;
-        if (rotation_v < -90) rotation_v = -90;
-        player.transform.eulerAngles = new Vector3(-rotation_v, rotation_h, 0.0f);
+        // Move translation along the object's z-axis
+        player.transform.Translate(0, 0, translation);
+        // Rotate around our y-axis
+        player.transform.Rotate(0, rotation, 0);
+        player_pos = player.transform.position; // + Camera.main.transform.position;
 
         // UI
         // pause panel show
@@ -67,8 +53,9 @@ public class camera : MonoBehaviour {
 
         if (if_player_in_forest())
         {
+
             my_weapon.SetActive(true);
-            /*
+
             // animation for weapon            
             if (animator)
             {
@@ -76,18 +63,25 @@ public class camera : MonoBehaviour {
 
                 if (Input.GetMouseButtonDown(0)) // left
                 {
+                    Debug.Log("left");
                     animator.SetTrigger("left");
                 }
 
                 if (Input.GetMouseButtonDown(1)) // right
                 {
+                    Debug.Log("right");
                     animator.SetTrigger("right");                 
                 }
-            }*/            
+
+            }
+            
         }
         else
         {
-            my_weapon.SetActive(false);
+            for (int i = 0; i < GameObject.Find("Weapon").transform.childCount; i++)
+            {
+                GameObject.Find("Weapon").transform.GetChild(i).gameObject.SetActive(false);
+            }
         }
     }
 
@@ -95,7 +89,6 @@ public class camera : MonoBehaviour {
     {
         if (collider.gameObject.CompareTag("levels"))
         {
-            Destroy(collider.gameObject);
             UnityEngine.SceneManagement.SceneManager.LoadScene("level");
         }
     }
