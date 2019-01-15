@@ -15,15 +15,11 @@ public class camera : MonoBehaviour {
     public static GameObject player;
     public Button m_Setting, m_Back, m_Save, m_Home;
 
-    protected Animator animator;
-    GameObject my_weapon;
     // Use this for initialization
     void Start () {
         player = GameObject.FindWithTag("Player");
         DontDestroyOnLoad(player);
         initialize_UI();
-        my_weapon = GameObject.Find("Weapon").transform.GetChild(0).gameObject;
-        animator = my_weapon.GetComponent<Animator>();
     }
 	
 	// Update is called once per frame
@@ -49,39 +45,6 @@ public class camera : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             pause_panel_show_hide(true);
-        }
-
-        if (if_player_in_forest())
-        {
-
-            my_weapon.SetActive(true);
-
-            // animation for weapon            
-            if (animator)
-            {
-                AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-
-                if (Input.GetMouseButtonDown(0)) // left
-                {
-                    Debug.Log("left");
-                    animator.SetTrigger("left");
-                }
-
-                if (Input.GetMouseButtonDown(1)) // right
-                {
-                    Debug.Log("right");
-                    animator.SetTrigger("right");                 
-                }
-
-            }
-            
-        }
-        else
-        {
-            for (int i = 0; i < GameObject.Find("Weapon").transform.childCount; i++)
-            {
-                GameObject.Find("Weapon").transform.GetChild(i).gameObject.SetActive(false);
-            }
         }
     }
 
@@ -130,19 +93,6 @@ public class camera : MonoBehaviour {
         for (int i = 0; i < GameObject.Find("Pause_menu").transform.childCount; i++)
         {
             GameObject.Find("Pause_menu").transform.GetChild(i).gameObject.SetActive(show);
-        }
-    }
-
-    bool if_player_in_forest()
-    {
-        Vector3 pos = player.transform.position;        
-        if (-50 < pos.x && pos.x < 50 && -50 < pos.z && pos.z < 50)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
         }
     }
 }

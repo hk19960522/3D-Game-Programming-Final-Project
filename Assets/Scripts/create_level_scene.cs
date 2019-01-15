@@ -16,11 +16,10 @@ public class create_level_scene : MonoBehaviour {
     float minPosX = 20, maxPosX = 480,
           minPosZ = 20, maxPosZ = 80;
 
-    float[] scale = new float[] { 3, 5, 7, 10, 13 };
-    float[] flower_scale = new float[] { 30, 50, 70 };
+    int[] scale = new int[] { 3, 5, 7, 10, 13 };
+    int[] flower_scale = new int[] { 30, 50, 70 };
     Vector3 new_pos;
-    int random_index;
-    float random_scale;
+    int random_index, random_scale;
     float random_scale_f;
     GameObject newObj;
     Transform my_prey;
@@ -36,36 +35,26 @@ public class create_level_scene : MonoBehaviour {
     void Create_prey()
     {
         random_index = Random.Range(0, prey.Length);
-        Debug.Log(random_index);
         new_pos = new Vector3(236.7f, 5.0f, 15.08f);
         new_pos.x += 1003;
         new_pos.z += 1004;
-        newObj = Instantiate(prey[random_index], new_pos, Quaternion.identity);
-        float prey_scale = 500.0f;
-        switch (random_index)
+        if (random_index == 0 || random_index == 3 || random_index == 4 || random_index == 5)
         {
-            case 0: // Bee
-                break;
-            case 1: // Rabbit
-                prey_scale = 50000;
-                break;
-            case 2: // Bat
-                prey_scale = 50000;
-                break;
-            case 3: // monkey
-                break;
-            case 4: // mushroom
-                break;
-            case 5: // tiger
-                prey_scale = 2500;
-                break;
-            default:
-                break;
+            new_pos.y += 2;
         }
-        newObj.transform.localScale = new Vector3(prey_scale, prey_scale, prey_scale);
+        else if(random_index == 2)
+        {
+            new_pos.y += 1;
+        }
+        newObj = Instantiate(prey[random_index], new_pos, Quaternion.identity);
+        newObj.transform.localScale = new Vector3(2, 2, 2);
         newObj.transform.localRotation *= Quaternion.Euler(0, 5, 0);
         newObj.transform.parent = preys.transform;
-        newObj.transform.localRotation *= Quaternion.Euler(0, 180, 0);
+        if(random_index == 1 || random_index == 3 || random_index == 4 || random_index == 5)
+        {
+            // rotate 180 degree
+            newObj.transform.localRotation *= Quaternion.Euler(0, 180, 0);
+        }
         my_prey = newObj.transform;
         BoxCollider prey_collider = newObj.AddComponent<BoxCollider>();
         prey_collider.transform.localScale = new Vector3(3, 3, 3);
@@ -84,7 +73,7 @@ public class create_level_scene : MonoBehaviour {
             if (i < 100) // trees
             {
                 random_index = Random.Range(0, tree.Length);
-                random_scale = scale[Random.Range(0, scale.Length)] * 0.5f;
+                random_scale = scale[Random.Range(0, scale.Length)];
                 new_pos = Get_new_pos();
                 newObj = Instantiate(tree[random_index], new_pos, Quaternion.identity);
                 newObj.transform.localScale = new Vector3(random_scale, random_scale, random_scale);
@@ -102,7 +91,6 @@ public class create_level_scene : MonoBehaviour {
             {
                 random_scale_f = Random.Range(0, 0.3f);
             }
-            random_scale_f *= 0.5f;
             new_pos = Get_new_pos();
             newObj = Instantiate(grass[random_index], new_pos, Quaternion.identity);
             newObj.transform.localScale = new Vector3(random_scale_f, random_scale_f, random_scale_f);
@@ -112,7 +100,7 @@ public class create_level_scene : MonoBehaviour {
             {
                 random_index = Random.Range(0, flower.Length);
                 int random_scale_index = Random.Range(0, flower_scale.Length);
-                random_scale = flower_scale[random_scale_index] * 0.5f;
+                random_scale = flower_scale[random_scale_index];
                 new_pos = Get_new_pos();
                 newObj = Instantiate(flower[random_index], new_pos, Quaternion.identity);
                 newObj.transform.localScale = new Vector3(random_scale, random_scale, random_scale);
@@ -123,7 +111,7 @@ public class create_level_scene : MonoBehaviour {
             {
                 // stone
                 random_index = Random.Range(0, stone.Length);
-                random_scale_f = Random.Range(1f, 2f) * 0.5f;
+                random_scale_f = Random.Range(1f, 2f);
                 new_pos = Get_new_pos();
                 newObj = Instantiate(stone[random_index], new_pos, Quaternion.identity);
                 newObj.transform.localScale = new Vector3(random_scale_f, random_scale_f, random_scale_f);
